@@ -1,639 +1,748 @@
 <!DOCTYPE html>
 <html lang="es">
-
+ 
 <head>
-
+ 
     <meta charset="UTF-8">
-
+ 
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0">
-
+ 
     <meta
         name="description"
         content="Panel de administración de FS STORE">
-
+ 
     <title>FS STORE | Administración</title>
-
+ 
     <link
         rel="icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛍️%3C/text%3E%3C/svg%3E">
-
-
+ 
+ 
     <!-- =========================
          BOOTSTRAP
     ========================== -->
-
+ 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet">
-
-
+ 
+ 
     <!-- =========================
          BOOTSTRAP ICONS
     ========================== -->
-
+ 
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-
+ 
+ 
     <!-- =========================
          CSS PRINCIPAL
     ========================== -->
-
+ 
     <link
         rel="stylesheet"
         href="css/estilos.css">
-
-
+ 
+ 
     <!-- =========================
          CSS ADMINISTRADOR
     ========================== -->
-
+ 
     <link
         rel="stylesheet"
         href="css/admin.css">
-
+ 
 </head>
-
-
+ 
+ 
 <body class="admin-page">
-
-
+ 
+ 
+<!-- =========================================
+     VERIFICAR SESIÓN ANTES DE MOSTRAR NADA
+     (redirige a login.html si no hay sesión;
+     ver js/auth.js para más detalles)
+========================================= -->
+ 
+<script src="js/auth.js"></script>
+<script>verificarSesionAdmin();</script>
+ 
+ 
 <!-- =========================================
      BARRA SUPERIOR
 ========================================= -->
-
+ 
 <header class="admin-header">
-
+ 
     <div class="admin-header-left">
-
-
+ 
+ 
         <!-- BOTÓN SIDEBAR -->
-
+ 
         <button
             id="btnSidebar"
             class="admin-menu-btn"
             type="button"
             aria-label="Abrir menú">
-
+ 
             <i class="bi bi-list"></i>
-
+ 
         </button>
-
-
+ 
+ 
         <!-- LOGO -->
-
+ 
         <a
             href="index.html"
             class="admin-logo">
-
+ 
             FS <span>STORE</span>
-
+ 
         </a>
-
+ 
     </div>
-
-
+ 
+ 
     <div class="admin-header-right">
-
-
+ 
+ 
         <!-- VER TIENDA -->
-
+ 
         <a
             href="index.html"
             class="admin-store-link">
-
+ 
             <i class="bi bi-shop"></i>
-
+ 
             <span>Ver tienda</span>
-
+ 
         </a>
-
-
+ 
+ 
         <!-- USUARIO ADMIN -->
-
+ 
         <div class="admin-user">
-
+ 
             <div class="admin-user-icon">
-
+ 
                 <i class="bi bi-person"></i>
-
+ 
             </div>
-
-
+ 
+ 
             <div class="admin-user-info">
-
+ 
                 <strong>Administrador</strong>
-
+ 
                 <small>Panel de control</small>
-
+ 
             </div>
-
+ 
         </div>
-
+ 
+ 
+        <!-- CERRAR SESIÓN -->
+ 
+        <button
+            type="button"
+            class="admin-store-link"
+            style="background: none; border: none; cursor: pointer;"
+            onclick="cerrarSesionAdmin()"
+            aria-label="Cerrar sesión">
+ 
+            <i class="bi bi-box-arrow-right"></i>
+ 
+            <span>Salir</span>
+ 
+        </button>
+ 
     </div>
-
+ 
 </header>
-
-
-
+ 
+ 
+ 
 <!-- =========================================
      ESTRUCTURA PRINCIPAL
 ========================================= -->
-
+ 
 <div class="admin-layout">
-
-
+ 
+ 
     <!-- =====================================
          SIDEBAR
     ====================================== -->
-
+ 
     <aside
         id="adminSidebar"
         class="admin-sidebar">
-
-
+ 
+ 
         <!-- TÍTULO -->
-
+ 
         <div class="sidebar-title">
-
+ 
             ADMINISTRACIÓN
-
+ 
         </div>
-
-
+ 
+ 
         <!-- NAVEGACIÓN -->
-
+ 
         <nav class="sidebar-nav">
-
-
+ 
+ 
             <!-- DASHBOARD -->
-
+ 
             <a
                 href="#dashboard"
                 class="sidebar-link active"
                 aria-current="page">
-
+ 
                 <i class="bi bi-grid-1x2"></i>
-
+ 
                 <span>Dashboard</span>
-
+ 
             </a>
-
-
+ 
+ 
             <!-- PRODUCTOS -->
-
+ 
             <a
                 href="#productos"
                 class="sidebar-link">
-
+ 
                 <i class="bi bi-box-seam"></i>
-
+ 
                 <span>Productos</span>
-
+ 
             </a>
-
-
+ 
+ 
             <!-- AGREGAR PRODUCTO -->
-
+ 
             <a
                 href="#agregar"
                 class="sidebar-link">
-
+ 
                 <i class="bi bi-plus-circle"></i>
-
+ 
                 <span>Agregar producto</span>
-
+ 
             </a>
-
-
+ 
+ 
             <!-- PEDIDOS -->
-
+ 
             <a
                 href="#pedidos"
                 class="sidebar-link">
-
+ 
                 <i class="bi bi-bag-check"></i>
-
+ 
                 <span>Pedidos</span>
-
-                <span class="sidebar-badge">
-                    0
+ 
+                <span
+                    class="sidebar-badge"
+                    title="Próximamente">
+                    —
                 </span>
-
+ 
             </a>
-
-
+ 
+ 
             <!-- CLIENTES -->
-
+ 
             <a
                 href="#clientes"
                 class="sidebar-link">
-
+ 
                 <i class="bi bi-people"></i>
-
+ 
                 <span>Clientes</span>
-
+ 
             </a>
-
-
-            <div class="sidebar-divider"></div>
-
-
-            <!-- INICIO -->
-
+ 
+ 
+        </nav>
+ 
+ 
+        <!-- =====================================
+             GRUPO: SALIR HACIA LA TIENDA PÚBLICA
+             (separado del panel de administración
+             para que no se mezclen ambos tipos
+             de navegación)
+        ====================================== -->
+ 
+        <div class="sidebar-title sidebar-title-secondary">
+ 
+            TIENDA
+ 
+        </div>
+ 
+        <nav class="sidebar-nav">
+ 
+ 
+            <!-- INICIO DE LA TIENDA -->
+ 
             <a
                 href="index.html"
                 class="sidebar-link">
-
+ 
                 <i class="bi bi-house"></i>
-
-                <span>Ir al inicio</span>
-
+ 
+                <span>Página de inicio</span>
+ 
             </a>
-
-
-            <!-- TIENDA -->
-
+ 
+ 
+            <!-- CATÁLOGO PÚBLICO -->
+ 
             <a
                 href="productos.html"
                 class="sidebar-link">
-
-                <i class="bi bi-shop"></i>
-
-                <span>Ver tienda</span>
-
+ 
+                <i class="bi bi-eye"></i>
+ 
+                <span>Ver catálogo público</span>
+ 
             </a>
-
-
+ 
+ 
         </nav>
-
-
+ 
+ 
         <!-- PARTE INFERIOR -->
-
+ 
         <div class="sidebar-bottom">
-
+ 
             <div class="sidebar-version">
-
+ 
                 FS STORE v1.0
-
+ 
             </div>
-
+ 
         </div>
-
+ 
     </aside>
-
-
-
+ 
+ 
+ 
     <!-- =====================================
          CONTENIDO PRINCIPAL
     ====================================== -->
-
+ 
     <main class="admin-content">
-
-
+ 
+ 
         <!-- =================================
              DASHBOARD
         ================================== -->
-
+ 
         <section
             id="dashboard"
             class="admin-section">
-
-
+ 
+ 
             <!-- TÍTULO -->
-
+ 
             <div class="admin-page-title">
-
+ 
                 <div>
-
+ 
                     <span class="admin-eyebrow">
                         PANEL DE CONTROL
                     </span>
-
-
+ 
+ 
                     <h1>
                         Dashboard
                     </h1>
-
-
+ 
+ 
                     <p>
                         Administra el catálogo de FS STORE.
                     </p>
-
+ 
                 </div>
-
-
+ 
+ 
                 <a
                     href="#agregar"
                     class="admin-primary-btn">
-
+ 
                     <i class="bi bi-plus-lg"></i>
-
+ 
                     Agregar producto
-
+ 
                 </a>
-
+ 
             </div>
-
-
-
+ 
+ 
+ 
             <!-- =========================
                  ESTADÍSTICAS
             ========================== -->
-
+ 
             <div class="row g-4 mb-5">
-
-
+ 
+ 
                 <!-- PRODUCTOS -->
-
+ 
                 <div class="col-sm-6 col-xl-3">
-
+ 
                     <div class="admin-stat-card">
-
+ 
                         <div class="stat-icon">
-
+ 
                             <i class="bi bi-box-seam"></i>
-
+ 
                         </div>
-
-
+ 
+ 
                         <div>
-
+ 
                             <span>
                                 Productos
                             </span>
-
+ 
                             <strong id="totalProductos">
                                 0
                             </strong>
-
+ 
                         </div>
-
+ 
                     </div>
-
+ 
                 </div>
-
-
-
+ 
+ 
+ 
                 <!-- PEDIDOS -->
-
+ 
                 <div class="col-sm-6 col-xl-3">
-
+ 
                     <div class="admin-stat-card stat-pending">
-
+ 
                         <div class="stat-icon">
-
+ 
                             <i class="bi bi-bag-check"></i>
-
+ 
                         </div>
-
-
+ 
+ 
                         <div>
-
+ 
                             <span>
                                 Pedidos
                             </span>
-
+ 
                             <strong>
                                 —
                             </strong>
-
+ 
                             <small class="stat-caption">
                                 PRÓXIMAMENTE
                             </small>
-
+ 
                         </div>
-
+ 
                     </div>
-
+ 
                 </div>
-
-
-
+ 
+ 
+ 
                 <!-- CLIENTES -->
-
+ 
                 <div class="col-sm-6 col-xl-3">
-
+ 
                     <div class="admin-stat-card stat-pending">
-
+ 
                         <div class="stat-icon">
-
+ 
                             <i class="bi bi-people"></i>
-
+ 
                         </div>
-
-
+ 
+ 
                         <div>
-
+ 
                             <span>
                                 Clientes
                             </span>
-
+ 
                             <strong>
                                 —
                             </strong>
-
+ 
                             <small class="stat-caption">
                                 PRÓXIMAMENTE
                             </small>
-
+ 
                         </div>
-
+ 
                     </div>
-
+ 
                 </div>
-
-
-
+ 
+ 
+ 
                 <!-- VENTAS -->
-
+ 
                 <div class="col-sm-6 col-xl-3">
-
+ 
                     <div class="admin-stat-card stat-pending">
-
+ 
                         <div class="stat-icon">
-
+ 
                             <i class="bi bi-currency-dollar"></i>
-
+ 
                         </div>
-
-
+ 
+ 
                         <div>
-
+ 
                             <span>
                                 Ventas
                             </span>
-
+ 
                             <strong>
                                 —
                             </strong>
-
+ 
                             <small class="stat-caption">
                                 PRÓXIMAMENTE
                             </small>
-
+ 
                         </div>
-
+ 
                     </div>
-
+ 
                 </div>
-
-
+ 
+ 
             </div>
-
-
-
+ 
+ 
+ 
             <!-- =========================
                  BIENVENIDA
             ========================== -->
-
+ 
             <div class="admin-welcome-card">
-
+ 
                 <div class="welcome-icon">
-
+ 
                     <i class="bi bi-shop"></i>
-
+ 
                 </div>
-
-
+ 
+ 
                 <div>
-
+ 
                     <h2>
                         Bienvenido al panel de FS STORE
                     </h2>
-
-
+ 
+ 
                     <p>
                         Desde aquí puedes administrar los
                         productos de tu catálogo, agregar nuevas
                         referencias y mantener actualizada
                         tu tienda.
                     </p>
-
+ 
                 </div>
-
+ 
             </div>
-
-
+ 
+ 
         </section>
-
-
-
+ 
+ 
+ 
         <!-- =================================
-             AGREGAR PRODUCTO
+             PRODUCTOS
         ================================== -->
-
+ 
         <section
-            id="agregar"
+            id="productos"
             class="admin-section">
-
-
-            <!-- ENCABEZADO -->
-
+ 
+ 
             <div class="section-heading">
-
+ 
+ 
                 <div>
-
+ 
                     <span class="admin-eyebrow">
                         CATÁLOGO
                     </span>
-
-
+ 
+ 
+                    <h2>
+                        Productos registrados
+                    </h2>
+ 
+ 
+                    <p>
+                        Consulta y administra los productos
+                        de FS STORE.
+                    </p>
+ 
+                </div>
+ 
+ 
+                <a
+                    href="#agregar"
+                    class="admin-secondary-btn">
+ 
+                    <i class="bi bi-plus-lg"></i>
+ 
+                    Nuevo producto
+ 
+                </a>
+ 
+            </div>
+ 
+ 
+ 
+            <!-- LISTA -->
+ 
+            <div class="admin-products-card">
+ 
+ 
+                <div
+                    id="listaAdmin"
+                    class="admin-table-container">
+ 
+                </div>
+ 
+ 
+            </div>
+ 
+ 
+        </section>
+ 
+ 
+ 
+        <!-- =================================
+             AGREGAR PRODUCTO
+        ================================== -->
+ 
+        <section
+            id="agregar"
+            class="admin-section">
+ 
+ 
+            <!-- ENCABEZADO -->
+ 
+            <div class="section-heading">
+ 
+                <div>
+ 
+                    <span class="admin-eyebrow">
+                        CATÁLOGO
+                    </span>
+ 
+ 
                     <h2>
                         Agregar producto
                     </h2>
-
-
+ 
+ 
                     <p>
                         Completa la información del nuevo producto.
                     </p>
-
+ 
                 </div>
-
+ 
             </div>
-
-
-
+ 
+ 
+ 
             <!-- FORMULARIO -->
-
+ 
             <div class="admin-form-card">
-
-
+ 
+ 
                 <form id="formProducto">
-
-
+ 
+ 
                     <div class="row g-4">
-
-
+ 
+ 
                         <!-- =====================
                              INFORMACIÓN
                         ====================== -->
-
+ 
                         <div class="col-lg-7">
-
-
+ 
+ 
                             <div class="form-section-title">
-
+ 
                                 <i class="bi bi-pencil-square"></i>
-
+ 
                                 Información del producto
-
+ 
                             </div>
-
-
-
+ 
+ 
+ 
                             <!-- NOMBRE -->
-
+ 
                             <div class="mb-4">
-
+ 
                                 <label
                                     for="nombre"
                                     class="admin-label">
-
+ 
                                     Nombre del producto
-
+ 
                                 </label>
-
-
+ 
+ 
                                 <input
                                     type="text"
                                     id="nombre"
                                     class="admin-input"
                                     placeholder="Ej: Camisa Premium"
                                     required>
-
+ 
                             </div>
-
-
-
+ 
+ 
+ 
                             <!-- PRECIO + CATEGORÍA -->
-
+ 
                             <div class="row g-3 mb-4">
-
-
+ 
+ 
                                 <!-- PRECIO -->
-
+ 
                                 <div class="col-md-6">
-
+ 
                                     <label
                                         for="precio"
                                         class="admin-label">
-
+ 
                                         Precio
-
+ 
                                     </label>
-
-
+ 
+ 
                                     <div class="input-money">
-
+ 
                                         <span>
                                             $
                                         </span>
-
-
+ 
+ 
                                         <input
                                             type="number"
                                             id="precio"
@@ -641,537 +750,472 @@
                                             placeholder="89900"
                                             min="0"
                                             required>
-
+ 
                                     </div>
-
+ 
                                 </div>
-
-
-
+ 
+ 
+ 
                                 <!-- CATEGORÍA -->
-
+ 
                                 <div class="col-md-6">
-
+ 
                                     <label
                                         for="categoria"
                                         class="admin-label">
-
+ 
                                         Categoría
-
+ 
                                     </label>
-
-
+ 
+ 
                                     <select
                                         id="categoria"
                                         class="admin-input"
                                         required>
-
-
+ 
+ 
                                         <option value="">
                                             Seleccionar categoría
                                         </option>
-
-
+ 
+ 
                                         <option value="hombre">
                                             Hombre
                                         </option>
-
-
+ 
+ 
                                         <option value="mujer">
                                             Mujer
                                         </option>
-
-
+ 
+ 
                                         <option value="accesorios">
                                             Accesorios
                                         </option>
-
-
+ 
+ 
                                     </select>
-
+ 
                                 </div>
-
-
+ 
+ 
                             </div>
-
-
-
+ 
+ 
+ 
                             <!-- DESCRIPCIÓN -->
-
+ 
                             <div class="mb-4">
-
+ 
                                 <label
                                     for="descripcion"
                                     class="admin-label">
-
+ 
                                     Descripción
-
+ 
                                 </label>
-
-
+ 
+ 
                                 <textarea
                                     id="descripcion"
                                     class="admin-input admin-textarea"
                                     rows="7"
                                     placeholder="Describe las características del producto..."
                                     required></textarea>
-
+ 
                             </div>
-
-
+ 
+ 
                         </div>
-
-
-
+ 
+ 
+ 
                         <!-- =====================
                              IMAGEN
                         ====================== -->
-
+ 
                         <div class="col-lg-5">
-
-
+ 
+ 
                             <div class="form-section-title">
-
+ 
                                 <i class="bi bi-image"></i>
-
+ 
                                 Imagen del producto
-
+ 
                             </div>
-
-
+ 
+ 
                             <label
                                 for="imagen"
                                 class="image-upload-area">
-
-
+ 
+ 
                                 <!-- PLACEHOLDER -->
-
+ 
                                 <div
                                     id="uploadPlaceholder"
                                     class="upload-placeholder">
-
-
+ 
+ 
                                     <div class="upload-icon">
-
+ 
                                         <i class="bi bi-cloud-arrow-up"></i>
-
+ 
                                     </div>
-
-
+ 
+ 
                                     <h3>
                                         Subir imagen
                                     </h3>
-
-
+ 
+ 
                                     <p>
                                         Haz clic para seleccionar
                                         una imagen desde tu computador.
                                     </p>
-
-
+ 
+ 
                                     <span>
                                         JPG, PNG o WEBP
                                     </span>
-
-
+ 
+ 
                                 </div>
-
-
+ 
+ 
                                 <!-- PREVISUALIZACIÓN -->
-
+ 
                                 <img
                                     id="preview"
                                     class="admin-preview"
                                     alt="Vista previa">
-
-
+ 
+ 
                                 <!-- INPUT -->
-
+ 
                                 <input
                                     type="file"
                                     id="imagen"
                                     accept="image/png,image/jpeg,image/webp"
                                     hidden>
-
+ 
                             </label>
-
-
+ 
+ 
                             <div class="image-tip">
-
+ 
                                 <i class="bi bi-info-circle"></i>
-
+ 
                                 Recomendado: imágenes cuadradas
                                 y de buena calidad.
-
+ 
                             </div>
-
-
+ 
+ 
                         </div>
-
-
+ 
+ 
                     </div>
-
-
-
+ 
+ 
+ 
                     <!-- =====================
                          BOTONES
                     ====================== -->
-
+ 
                     <div class="form-actions">
-
-
+ 
+ 
                         <button
                             type="reset"
                             class="admin-secondary-btn">
-
+ 
                             <i class="bi bi-arrow-counterclockwise"></i>
-
+ 
                             Limpiar
-
+ 
                         </button>
-
-
+ 
+ 
                         <button
                             type="submit"
                             class="admin-primary-btn">
-
+ 
                             <i class="bi bi-plus-lg"></i>
-
+ 
                             Agregar producto
-
+ 
                         </button>
-
-
+ 
+ 
                     </div>
-
-
+ 
+ 
                 </form>
-
-
+ 
+ 
             </div>
-
-
+ 
+ 
         </section>
-
-
-
-        <!-- =================================
-             PRODUCTOS
-        ================================== -->
-
-        <section
-            id="productos"
-            class="admin-section">
-
-
-            <div class="section-heading">
-
-
-                <div>
-
-                    <span class="admin-eyebrow">
-                        CATÁLOGO
-                    </span>
-
-
-                    <h2>
-                        Productos registrados
-                    </h2>
-
-
-                    <p>
-                        Consulta y administra los productos
-                        de FS STORE.
-                    </p>
-
-                </div>
-
-
-                <a
-                    href="#agregar"
-                    class="admin-secondary-btn">
-
-                    <i class="bi bi-plus-lg"></i>
-
-                    Nuevo producto
-
-                </a>
-
-            </div>
-
-
-
-            <!-- LISTA -->
-
-            <div class="admin-products-card">
-
-
-                <div
-                    id="listaAdmin"
-                    class="admin-table-container">
-
-                </div>
-
-
-            </div>
-
-
-        </section>
-
-
-
+ 
+ 
+ 
         <!-- =================================
              PEDIDOS
         ================================== -->
-
+ 
         <section
             id="pedidos"
             class="admin-section">
-
-
+ 
+ 
             <div class="section-heading">
-
+ 
                 <div>
-
+ 
                     <span class="admin-eyebrow">
                         VENTAS
                     </span>
-
-
+ 
+ 
                     <h2>
                         Pedidos
                     </h2>
-
-
+ 
+ 
                     <p>
                         En esta sección podrás gestionar
                         los pedidos de la tienda.
                     </p>
-
+ 
                 </div>
-
+ 
             </div>
-
-
+ 
+ 
             <div class="admin-empty-state">
-
+ 
                 <div class="empty-icon">
-
+ 
                     <i class="bi bi-bag-check"></i>
-
+ 
                 </div>
-
+ 
                 <h2>
                     Sin pedidos registrados
                 </h2>
-
+ 
                 <p>
                     La gestión de pedidos estará disponible
                     cuando conectemos el catálogo con el
                     sistema de pedidos.
                 </p>
-
+ 
             </div>
-
+ 
         </section>
-
-
-
+ 
+ 
+ 
         <!-- =================================
              CLIENTES
         ================================== -->
-
+ 
         <section
             id="clientes"
             class="admin-section">
-
-
+ 
+ 
             <div class="section-heading">
-
+ 
                 <div>
-
+ 
                     <span class="admin-eyebrow">
                         CLIENTES
                     </span>
-
-
+ 
+ 
                     <h2>
                         Clientes
                     </h2>
-
-
+ 
+ 
                     <p>
                         Aquí podrás consultar los clientes
                         cuando se implemente el sistema de usuarios.
                     </p>
-
+ 
                 </div>
-
+ 
             </div>
-
-
+ 
+ 
             <div class="admin-empty-state">
-
+ 
                 <div class="empty-icon">
-
+ 
                     <i class="bi bi-people"></i>
-
+ 
                 </div>
-
+ 
                 <h2>
                     Gestión de clientes
                 </h2>
-
+ 
                 <p>
                     Esta sección queda preparada para una
                     futura conexión con la base de datos.
                 </p>
-
+ 
             </div>
-
+ 
         </section>
-
-
+ 
+ 
     </main>
-
+ 
 </div>
-
-
-
+ 
+ 
+ 
 <!-- =========================================
      JAVASCRIPT ADMIN
 ========================================= -->
-
+ 
 <script src="js/admin.js"></script>
-
-
-
+ 
+ 
+ 
 <!-- =========================================
      SIDEBAR MOBILE
 ========================================= -->
-
+ 
 <script>
-
+ 
     const btnSidebar =
         document.getElementById("btnSidebar");
-
+ 
     const sidebar =
         document.getElementById("adminSidebar");
-
-
+ 
+ 
     if (btnSidebar && sidebar) {
-
+ 
         btnSidebar.addEventListener(
             "click",
             () => {
-
+ 
                 sidebar.classList.toggle("show");
-
+ 
             }
         );
-
+ 
     }
-
-
-
+ 
+ 
+ 
     // =========================================
     // CERRAR SIDEBAR AL SELECCIONAR
     // =========================================
-
+ 
     document
         .querySelectorAll(".sidebar-link")
         .forEach(link => {
-
+ 
             link.addEventListener(
                 "click",
                 () => {
-
+ 
                     if (window.innerWidth <= 992) {
-
+ 
                         sidebar.classList.remove("show");
-
+ 
                     }
-
+ 
                 }
             );
-
+ 
         });
-
-
-
+ 
+ 
+ 
     // =========================================
     // RESALTAR SECCIÓN VISIBLE EN EL SIDEBAR
     // (evita que "Dashboard" quede marcado
     // como activo para siempre al navegar)
     // =========================================
-
+ 
     const seccionesAdmin =
         document.querySelectorAll(".admin-section[id]");
-
+ 
     const enlacesSidebar =
         document.querySelectorAll(
             '.sidebar-link[href^="#"]'
         );
-
+ 
     if (seccionesAdmin.length && enlacesSidebar.length) {
-
+ 
         const observador = new IntersectionObserver(
             (entradas) => {
-
+ 
                 entradas.forEach(entrada => {
-
+ 
                     if (!entrada.isIntersecting) return;
-
+ 
                     const idActivo =
                         entrada.target.getAttribute("id");
-
+ 
                     enlacesSidebar.forEach(enlace => {
-
+ 
                         const esActivo =
                             enlace.getAttribute("href") ===
                             "#" + idActivo;
-
+ 
                         enlace.classList.toggle(
                             "active",
                             esActivo
                         );
-
+ 
                         if (esActivo) {
-
+ 
                             enlace.setAttribute(
                                 "aria-current",
                                 "page"
                             );
-
+ 
                         } else {
-
+ 
                             enlace.removeAttribute(
                                 "aria-current"
                             );
-
+ 
                         }
-
+ 
                     });
-
+ 
                 });
-
+ 
             },
             {
                 rootMargin: "-45% 0px -50% 0px"
             }
         );
-
+ 
         seccionesAdmin.forEach(seccion => {
-
+ 
             observador.observe(seccion);
-
+ 
         });
-
+ 
     }
-
+ 
 </script>
-
-
+ 
+ 
 </body>
-
+ 
 </html>
