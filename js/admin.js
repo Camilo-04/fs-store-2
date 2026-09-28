@@ -242,11 +242,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
 
             }
-            const totalProductos =
-    document.getElementById("totalProductos");
+function actualizarEstadisticas() {
+    const totalProductos =
+        document.getElementById("totalProductos");
 
-if (totalProductos) {
-    totalProductos.textContent = obtenerProductos().length;
+    if (totalProductos) {
+        totalProductos.textContent =
+            obtenerProductos().length;
+    }
 }
 
 
